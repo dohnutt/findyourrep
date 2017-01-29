@@ -1,38 +1,49 @@
 //@prepros-prepend jquery.min.js
 //@prepros-prepend jquery.findyourrep-pack.min.js
 //@prepros-prepend jquery.findyourrep-ca.js
-
-(function($) {
-
+(function(window){
   /*
    * Initialize FindYourRep
    * https://github.com/opennorth/jquery-findyourrep-ca
    */
   $('body').find('#fyr').findYourRep({
     apis: 'represent',
-    text: 'Enter your postal code to see who represents you.'
+    text: 'Enter your postal code to see who represents you.',
   });
 
-  /*
-   * Accessible skip to content link
-   */
-  $(".skip").click(function(event){
-    // strip the leading hash and declare the content we're skipping to
-    event.preventDefault();
-    var skipTo="#"+this.href.split('#')[1];
-    // Setting 'tabindex' to -1 takes an element out of normal tab flow but allows it to be focused via javascript
-    $(skipTo).attr('tabindex', -1).on('blur focusout', function () {
-      // when focus leaves this element, remove the tabindex attribute
-      $(this).removeAttr('tabindex');
-    }).focus(); // focus on the content container
+  $(document).on('click', '#fyrSelectReps', function(e) {
+    var selectedReps = [];
+    $(".fyr-reps input:checked").each(function() {
+      var selectedRep = [
+        $(this).parent().data('name'),
+        $(this).parent().data('email')
+      ];
+      selectedReps.push( selectedRep );
+    });
+    if ( selectedReps.length ) {
+      console.log(selectedReps);
+      $('#fyrSelectReps').text('Select these ' + selectedReps.length + ' representatives');
+    } else {
+      $('#selectOneAlert').hide();
+      $('#fyrSelectReps').text('Select these representatives');
+      $('#fyrRepsSelectedForm').append('<p class="alert alert-warning" id="selectOneAlert">Oops! Please select at least one representative and then try again.</p>');
+    }
+
+    var count = $('.fyr-reps input:checked').length;
+
   });
 
-  /*
-   * Share links open in a small popup window
-   */
-  $('.share-link').click(function(e) {
+
+  /*var selected = [];
+  $('.fyr-reps .checkbox:checked').each(function() {
+    selected.push( $(this).parent().data('email') );
+  });
+  if ( selected.length ) {
+    console.log(selected);
     e.preventDefault();
-    window.open($(this).attr('href'), 'shareWindow', 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0, directories=0, scrollbars=0');
-    return false;
-  });
-})(jQuery);
+  } else {
+    $('#fyrRepsSelectedForm').prepend('<p class="alert alert-warning">Oops! Please select at least one representative and then try again.</p>');
+    e.preventDefault();
+  }*/
+
+})(this);

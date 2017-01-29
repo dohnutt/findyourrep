@@ -45,12 +45,27 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
   max-width: 19em;
 }
 
+.btn {
+  padding-bottom: 0.4rem;
+}
+.btn-lg {
+  padding-bottom: $btn-padding-y;
+}
+
 header {
   padding: 1em 0;
+}
+.logo {
+  font-size: 1em;
+  font-weight:800;
+  position: relative;
 
-  .logo {
-    font-size: 1em;
-    font-weight:800;
+  img {
+    width: auto;
+    height: 0.7em;
+    position: relative;
+    top: -0.07em;
+    margin-right: 0.2em;
   }
 }
 
@@ -116,6 +131,30 @@ header {
   .checkbox:checked + label {
     color: $brand-primary;
     border-color: $brand-primary;
+
+    @media (max-width: 399px) {
+      h4 {
+        &:after {
+          content: '\f003';
+          font-family: FontAwesome;
+          margin-left: 0.25em;
+          position: relative;
+          line-height: normal;
+        }
+      }
+    }
+    @media (min-width: 400px) {
+      &:after {
+        content: '\f003';
+        font-family: FontAwesome;
+        font-size: 1.4em;
+        position: absolute;
+        right: 0.75em;
+        top: 50%;
+        line-height: 1;
+        margin-top: -16.5px;
+      }
+    }
   }
 
   a {
@@ -123,10 +162,20 @@ header {
     position: relative;
     color: $body-color;
   }
-  img {
+  .img-container {
     float: left;
+    position: relative;
     width: 5em;
+    max-height: 6em;
+    overflow: hidden;
     margin-right: 1em;
+    border-radius: $border-radius-sm;
+    background-color: #ddd;
+  }
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: $border-radius-sm;
   }
   h4, p {
     margin: 0;
@@ -135,6 +184,14 @@ header {
   @include media-breakpoint-down(sm) {
     margin-left: -15px;
     margin-right: -15px;
+  }
+}
+
+.alert-warning {
+  &:before {
+    content: '\f071';
+    font-family: FontAwesome;
+    margin-right: 0.5em;
   }
 }
 

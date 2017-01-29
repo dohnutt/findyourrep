@@ -38,7 +38,7 @@
     return dfd;
   };
 
-  $.findYourRep.getTemplateContext = function(rep, api){
+  $.findYourRep.getTemplateContext = function(rep, api) {
     return {
       details: rep.elected_office + ', ' + rep.district_name,
       photoUrl: rep.photo_url,
@@ -58,7 +58,7 @@
     "<div class='find-your-rep fyr-container' id='fyr-id{{ idx }}' data-apis='{{ apis }}'>" +
       "<h3>{{ title }}</h3>" +
       "<div class='fyr-controls'>" +
-        "<form>" +
+        "<form id='fyrSearchForm'>" +
           "<label for='fyr-address'>{{ text }}</label>" +
           "<div class='form-inline'>" +
             "<input type='text' class='fyr-address form-control' id='fyr-address' placeholder='Eg. A1A 1A1' value='{{ defaultValue }}'>" +
@@ -66,24 +66,28 @@
           "</div>" +
         "</form>" +
       "</div>" +
-     "</div>" +
-    "<p><small>Powered by <a href='https://represent.opennorth.ca/'>Represent</a></small></p>";
+     "</div>";
 
   $.findYourRep.resultsTemplate = "" +
     "<div class='fyr-results'>" +
       "<h3>Your Representatives</h3>" +
       "<p>Click on a representative to find more details on how to contact them.</p>" +
-      "<div class='fyr-represent cf' style='display:none;'>" +
-        "<ul class='fyr-reps'></ul>" +
-      "</div>" +
-      "<a href='#' class='fyr-back'>&laquo; start over</a>" +
+      "<form id='fyrRepsSelectedForm'>" +
+        "<div class='fyr-represent cf' style='display:none;'>" +
+          "<ul class='fyr-reps'></ul>" +
+        "</div>" +
+        "<p><button type='button' class='btn btn-primary btn-lg btn-block' id='fyrSelectReps'>Select these representatives</button></p>" +
+      "</form>" +
+      "<p class='small'><a href='#' class='fyr-back'>&laquo; start over</a></p>" +
     "</div>";
 
   $.findYourRep.resultTemplate = "" +
-    "<li class='fyr-rep cf'>" +
+    "<li class='fyr-rep cf' data-name='{{ name }}' data-slug='{{ slug }}' data-email='{{ email }}'>" +
       "<input type='checkbox' class='checkbox' id='{{ slug }}' name='{{ name }}' value='{{ slug }}'>" +
       "<label for='{{ slug }}'>" +
-        "<img src='{{ photoUrl }}' alt='photo of {{ name }}'>" +
+        "<div class='img-container'>" +
+          "<img src='{{ photoUrl }}' alt='photo of {{ name }}'>" +
+        "</div>" +
         "<h4>{{ name }}</h4>" +
         "<p class='fyr-details'>{{ details }}</p>" +
       "</label>" +
